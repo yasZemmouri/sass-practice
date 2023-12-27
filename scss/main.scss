@@ -1,0 +1,54 @@
+//Import partials
+@import './resets';
+@import './variables';
+
+//Functions
+@function weight($weight-name) {
+    @return map-get($map: $font-weights, $key: $weight-name);
+}
+
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin theme($light-theme: true) {
+    @if $light-theme {
+        background: lighten($primary-color, 100%);
+        color: darken($text-color, 100%);
+    }
+}
+
+
+body {
+    background-color: $primary-color;
+    color: $text-color;
+    font-weight: weight(regular);
+}
+
+.main {
+    @include flexCenter(column);
+    // background-color: $accent-color;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+
+    //instead of .main p we can nest
+    //.main_paragraph shortcuted
+    //& = the parent
+    // &_paragraph compiles to .main_paragraph while #{&}_paragraph compiles to .main .main_paragraph 
+    //#{&} is called interpolation. I need to know more about it.
+    #{&}_paragraph {
+        color: yellow;
+
+        &:hover {
+            color: blue;
+        }
+    }
+}
+
+.light {
+    @include theme($light-theme: true);
+}
